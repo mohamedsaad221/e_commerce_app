@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/models/user_model.dart';
+
 import 'package:e_commerce_app/modules/login/cubit/states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class LoginCubit extends Cubit<LoginStates> {
     required String email,
     required String password,
   }) {
-    emit(SocialLoginLoadingState());
+    emit(LoginLoadingState());
 
     FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
@@ -22,9 +22,9 @@ class LoginCubit extends Cubit<LoginStates> {
     ).then((value) {
       print(value.user!.email);
       print(value.user!.uid);
-      emit(SocialLoginSuccessState(value.user!.uid));
+      emit(LoginSuccessState(value.user!.uid));
     }).catchError((error) {
-      emit(SocialLoginErrorState(error.toString()));
+      emit(LoginErrorState(error.toString()));
     });
   }
 
@@ -37,20 +37,41 @@ class LoginCubit extends Cubit<LoginStates> {
     suffix =
     isPassword ? Icons.visibility_off_rounded : Icons.visibility_outlined;
 
-    emit(SocialLoginPasswordVisibility());
+    emit(LoginPasswordVisibility());
   }
 
-  // UserModel userModel;
+  void loginWithFaceBook() async{
+
+    emit(LoginWithFaceBookLoadingState());
+
+
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    // Once signed in, return the UserCredential
+    await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential).then((value) {
+       emit(LoginWithFaceBookSuccessState());
+     }).catchError((error){
+       emit(LoginWithFaceBookErrorState(error));
+     });
+
+
+  }
+
+
+  // void saveUser(UserCredential userData) async {
+  //   UserModel userModel = UserModel(
+  //     uId: userData.user!.uid,
+  //     email: userData.user!.email,
+  //     name: name == null ? userData.user!.displayName : name,
+  //     image: 'default',
+  //     // pic: userData.user.photoURL,
+  //   );
   //
-  // void loginWithFaceBook() async{
-  //
-  //   LoginResult result = await FacebookAuth.instance.login();
-  //
-  //   final accessToken = result.accessToken!.token;
-  //
-  //
-  //
-  // }
+  //   await FireStoreUser().addUserToFireStore(userModel);
+  //   setUser(userModel);
 
 
 }

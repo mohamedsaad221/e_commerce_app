@@ -2,18 +2,30 @@ abstract class LoginStates {}
 
 class InitialState extends LoginStates {}
 
-class SocialLoginLoadingState extends LoginStates {}
+class LoginLoadingState extends LoginStates {}
 
-class SocialLoginSuccessState extends LoginStates {
+class LoginSuccessState extends LoginStates {
   final uId;
 
-  SocialLoginSuccessState(this.uId);
+  LoginSuccessState(this.uId);
 }
 
-class SocialLoginErrorState extends LoginStates {
+class LoginErrorState extends LoginStates {
   final error;
 
-  SocialLoginErrorState(this.error);
+  LoginErrorState(this.error);
 }
 
-class SocialLoginPasswordVisibility extends LoginStates {}
+class LoginPasswordVisibility extends LoginStates {}
+
+
+class LoginWithFaceBookLoadingState extends LoginStates {}
+
+class LoginWithFaceBookSuccessState extends LoginStates {
+}
+
+class LoginWithFaceBookErrorState extends LoginStates {
+  final error;
+
+  LoginWithFaceBookErrorState(this.error);
+}
