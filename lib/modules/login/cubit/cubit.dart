@@ -1,7 +1,9 @@
+import 'package:e_commerce_app/models/user_model.dart';
 import 'package:e_commerce_app/modules/login/cubit/states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(InitialState());
@@ -37,4 +39,18 @@ class LoginCubit extends Cubit<LoginStates> {
 
     emit(SocialLoginPasswordVisibility());
   }
+
+  // UserModel userModel;
+  //
+  // void loginWithFaceBook() async{
+  //
+  //   LoginResult result = await FacebookAuth.instance.login();
+  //
+  //   final accessToken = result.accessToken!.token;
+  //
+  //
+  //
+  // }
+
+
 }

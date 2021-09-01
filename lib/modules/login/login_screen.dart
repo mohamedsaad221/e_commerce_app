@@ -116,6 +116,32 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 10.0,
                     ),
+                    InkWell(
+                      onTap: (){
+                        // code for login with facebook
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 30.0,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                          )
+                        ),
+                        child: Row(
+                          children:
+                          [
+                            Icon(
+                              Icons.login
+                            ),
+                            Text(
+                              'Sign in With Facebook',
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
