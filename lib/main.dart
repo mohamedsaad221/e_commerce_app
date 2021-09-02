@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/modules/login/login_screen.dart';
+import 'package:e_commerce_app/shared/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,10 +18,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.green,
-        primaryColor: Colors.green,
+        primarySwatch: myGreen,
+        primaryColor: primaryColor,
         appBarTheme: AppBarTheme(
           backwardsCompatibility: false,
           color: Colors.white,
