@@ -1,11 +1,18 @@
 import 'package:e_commerce_app/modules/login/cubit/cubit.dart';
 import 'package:e_commerce_app/modules/login/cubit/states.dart';
+import 'package:e_commerce_app/modules/register/register_screen.dart';
 import 'package:e_commerce_app/shared/components/components.dart';
+import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/components/custom_button.dart';
+import 'package:e_commerce_app/shared/components/custom_social_button.dart';
+import 'package:e_commerce_app/shared/components/custom_text.dart';
+import 'package:e_commerce_app/shared/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 
 class LoginScreen extends StatelessWidget {
+
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
@@ -18,139 +25,119 @@ class LoginScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(),
             body: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding:
+                  const EdgeInsets.only(top: 100.0, right: 20.0, left: 20.0),
               child: SingleChildScrollView(
                 child: Form(
                   key: formKey,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(top: 60.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Welcome',
-                                    style: Theme.of(context).textTheme.headline4,
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.only(
-                                      start: 5.0
-                                    ),
-                                    child: Text(
-                                      'sign in to continue',
-                                      style: Theme.of(context).textTheme.caption,
-
-                                    ),
-                                  ),
-                                ],
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                              ),
-                            ),
-                            defaultTextButton(
-                              function: () {},
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            text: 'Welcome,',
+                            fontSize: 30.0,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              // navigate to register screen
+                              navigateTo(context, RegisterScreen());
+                            },
+                            child: CustomText(
                               text: 'Sign Up',
-                            )
-                          ],
-                        ),
+                              fontSize: 18.0,
+                              color: primaryColor,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 50.0,
+                      SizedBox(height: 10),
+                      CustomText(
+                        text: 'Sign in to Continue',
+                        fontSize: 14,
+                        color: Colors.grey,
                       ),
-                      defaultFormField(
+                      SizedBox(height: 30),
+                      CustomTextFormField(
                         controller: emailController,
-                        type: TextInputType.name,
+                        type: TextInputType.emailAddress,
                         validate: (value) {
                           if (value.isEmpty) {
-                            return 'name must not be empty';
+                            return 'email must not be empty';
                           }
                           return null;
                         },
-                        labelText: 'Email',
+                        hint: 'name@example.com',
+                        text: 'Email',
                       ),
-                      SizedBox(
-                        height: 25.0,
+                      SizedBox(height: 40.0),
+                      CustomTextFormField(
+                        controller: passwordController,
+                        type: TextInputType.visiblePassword,
+                        validate: (value) {
+                          if (value.isEmpty) {
+                            return 'password must not be empty';
+                          }
+                          return null;
+                        },
+                        hint: '********',
+                        text: 'Password',
+                        isPassword: LoginCubit.get(context).isPassword,
+                        suffixIcon: LoginCubit.get(context).suffix,
+                        suffixPressed: () =>
+                            LoginCubit.get(context).changePasswordVisibility(),
                       ),
-                      defaultFormField(
-                          controller: passwordController,
-                          type: TextInputType.visiblePassword,
-                          validate: (value) {
-                            if (value.isEmpty) {
-                              return 'password must not be empty';
-                            }
-                            return null;
-                          },
-                          labelText: 'Password',
-                          isPassword: LoginCubit.get(context).isPassword,
-                          suffixIcon: LoginCubit.get(context).suffix,
-                          suffixPressed: () =>
-                              LoginCubit.get(context).changePasswordVisibility()),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          defaultTextButton(
-                            function: () {},
-                            text: 'Forget Password?',
-                          )
-                        ],
+                      SizedBox(height: 20),
+                      GestureDetector(
+                        onTap: () {},
+                        child: CustomText(
+                          text: 'Forget Password?',
+                          fontSize: 14,
+                          alignment: Alignment.topRight,
+                        ),
                       ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
+                      SizedBox(height: 20),
                       Conditional.single(
                         context: context,
-                        conditionBuilder: (context) => state is! LoginErrorState,
-                        widgetBuilder: (context) => defaultTextMaterialButton(
-                          context: context,
-                          function: () {
+                        conditionBuilder: (context) =>
+                            state is! LoginErrorState,
+                        widgetBuilder: (context) => CustomButton(
+                          text: 'SIGN IN',
+                          onPressed: () {
+                            formKey.currentState!.save();
                             if (formKey.currentState!.validate()) {
                               LoginCubit.get(context).userLogin(
                                   email: emailController.text,
                                   password: passwordController.text);
                             }
                           },
-                          text: 'Login',
-                          colorText: Colors.white,
                         ),
                         fallbackBuilder: (context) =>
                             Center(child: CircularProgressIndicator()),
                       ),
-                      SizedBox(
-                        height: 20.0,
+                      SizedBox(height: 20.0),
+                      CustomText(
+                        text: '-OR-',
+                        alignment: Alignment.center,
+                        fontSize: 18,
                       ),
-                      Center(
-                        child: Text(
-                          '-OR-',
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      defaultLoginSocialBottom(
-                        onTab: () {
+                      SizedBox(height: 20),
+                      CustomSocialButton(
+                        text: 'Sign In with Facebook',
+                        imageName: 'facebook.png',
+                        onPressed: () {
                           LoginCubit.get(context).loginWithFaceBook();
                         },
-                        context: context,
-                        image: 'assets/images/facebook.png'
                       ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      defaultLoginSocialBottom(
-                          onTab: () {
-                            // login with google
-                          },
-                          context: context,
-                          image: 'assets/images/google.png'
+                      SizedBox(height: 20.0),
+                      CustomSocialButton(
+                        text: 'Sign In with Google',
+                        imageName: 'google.png',
+                        onPressed: () {
+                          LoginCubit.get(context).loginWithFaceBook();
+                        },
                       ),
                     ],
                   ),
@@ -163,3 +150,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+

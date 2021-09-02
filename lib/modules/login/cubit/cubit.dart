@@ -1,14 +1,20 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/models/user_model.dart';
 import 'package:e_commerce_app/modules/login/cubit/states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(InitialState());
 
   static LoginCubit get(context) => BlocProvider.of(context);
+
+  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   void userLogin({
     required String email,
@@ -34,10 +40,22 @@ class LoginCubit extends Cubit<LoginStates> {
   void changePasswordVisibility() {
     isPassword = !isPassword;
 
-    suffix =
-    isPassword ? Icons.visibility_off_rounded : Icons.visibility_outlined;
+    suffix = isPassword ? Icons.visibility_off_rounded : Icons.visibility_outlined;
 
     emit(LoginPasswordVisibility());
+  }
+
+  final CollectionReference _userCollectionReference =
+  FirebaseFirestore.instance.collection('Users');
+
+  Future<void> addUserToFireStore(UserModel userModel) async {
+    return await _userCollectionReference
+        .doc(userModel.uId!)
+        .set(userModel.toMap());
+  }
+
+  Future<DocumentSnapshot> getCurrentUser(String uid) async{
+    return await _userCollectionReference.doc(uid).get();
   }
 
   void loginWithFaceBook() async{
@@ -60,18 +78,35 @@ class LoginCubit extends Cubit<LoginStates> {
 
   }
 
+  void googleSignInMethod() async {
 
-  // void saveUser(UserCredential userData) async {
-  //   UserModel userModel = UserModel(
-  //     uId: userData.user!.uid,
-  //     email: userData.user!.email,
-  //     name: name == null ? userData.user!.displayName : name,
-  //     image: 'default',
-  //     // pic: userData.user.photoURL,
-  //   );
-  //
-  //   await FireStoreUser().addUserToFireStore(userModel);
-  //   setUser(userModel);
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication = await googleUser!.authentication;
+
+    final AuthCredential googleCredential = GoogleAuthProvider.credential(
+      idToken: googleSignInAuthentication.idToken,
+      accessToken: googleSignInAuthentication.accessToken,
+    );
+
+    await _auth.signInWithCredential(googleCredential).then((user) async {
+      saveUser(user);
+      //navigate to home layout here
+      print(user);
+    });
+  }
+
+
+  void saveUser(UserCredential userData) async {
+    UserModel userModel = UserModel(
+      uId: userData.user!.uid,
+      email: userData.user!.email,
+      name: userData.user!.displayName ,
+      image: 'default',
+    );
+
+    await addUserToFireStore(userModel);
+  }
+
 
 
 }
