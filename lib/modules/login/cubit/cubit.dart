@@ -69,8 +69,10 @@ class LoginCubit extends Cubit<LoginStates> {
     final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
-    await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential).then((value) {
+    await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential).then((user) {
+      saveUser(user);
        emit(LoginWithFaceBookSuccessState());
+      //navigate to home layout here
      }).catchError((error){
        emit(LoginWithFaceBookErrorState(error));
      });
@@ -79,6 +81,8 @@ class LoginCubit extends Cubit<LoginStates> {
   }
 
   void googleSignInMethod() async {
+
+    emit(LoginWithGoogleLoadingState());
 
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleSignInAuthentication = await googleUser!.authentication;
@@ -90,8 +94,11 @@ class LoginCubit extends Cubit<LoginStates> {
 
     await _auth.signInWithCredential(googleCredential).then((user) async {
       saveUser(user);
+      emit(LoginWithGoogleSuccessState());
       //navigate to home layout here
       print(user);
+    }).catchError((error) {
+      emit(LoginWithGoogleErrorState(error));
     });
   }
 
@@ -101,10 +108,64 @@ class LoginCubit extends Cubit<LoginStates> {
       uId: userData.user!.uid,
       email: userData.user!.email,
       name: userData.user!.displayName ,
-      image: 'default',
+      image: 'https://i.imgur.com/OYaZRYS.jpg',
     );
 
     await addUserToFireStore(userModel);
+  }
+
+  // register
+
+  void userRegister({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+  }) {
+    emit(RegisterLoadingState());
+
+    FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    ).then((value) {
+
+      createUser(
+        name: name,
+        email: email,
+        uId: value.user!.uid,
+        phone: phone,
+      );
+
+    }).catchError((error) {
+      print(error.toString());
+      emit(RegisterErrorState(error.toString()));
+    });
+  }
+
+
+  void createUser({
+    required String name,
+    required String email,
+    required String uId,
+    required String phone,
+  }){
+
+    UserModel model = UserModel(
+      name: name,
+      email: email,
+      uId: uId,
+      image:'https://i.imgur.com/OYaZRYS.jpg',
+      phone: phone,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .set(model.toMap()).then((value) {
+      emit(CreateUserSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(CreateUserErrorState(error.toString()));
+    });
   }
 
 

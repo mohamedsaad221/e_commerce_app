@@ -29,3 +29,36 @@ class LoginWithFaceBookErrorState extends LoginStates {
 
   LoginWithFaceBookErrorState(this.error);
 }
+
+class LoginWithGoogleLoadingState extends LoginStates {}
+
+class LoginWithGoogleSuccessState extends LoginStates {
+}
+
+class LoginWithGoogleErrorState extends LoginStates {
+  final error;
+
+  LoginWithGoogleErrorState(this.error);
+}
+
+// Register
+
+class RegisterLoadingState extends LoginStates {}
+
+class RegisterSuccessState extends LoginStates {}
+
+class RegisterErrorState extends LoginStates {
+  final error;
+
+  RegisterErrorState(this.error);
+}
+
+class CreateUserSuccessState extends LoginStates {}
+
+class CreateUserErrorState extends LoginStates {
+  final error;
+
+  CreateUserErrorState(this.error);
+}
+
+class RegisterPasswordVisibility extends LoginStates {}
