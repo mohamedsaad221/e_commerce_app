@@ -66,16 +66,21 @@ class LoginCubit extends Cubit<LoginStates> {
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
     // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+   if(loginResult.status == LoginStatus.success) {
+     final  accessToken =  loginResult.accessToken!.token;
+     final faceCredential = FacebookAuthProvider.credential(accessToken);
 
-    // Once signed in, return the UserCredential
-    await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential).then((user) {
-      saveUser(user);
+     // Once signed in, return the UserCredential
+     await FirebaseAuth.instance.signInWithCredential(faceCredential).then((user) {
+       saveUser(user);
        emit(LoginWithFaceBookSuccessState());
-      //navigate to home layout here
+       //navigate to home layout here
      }).catchError((error){
        emit(LoginWithFaceBookErrorState(error));
      });
+
+   }
+
 
 
   }

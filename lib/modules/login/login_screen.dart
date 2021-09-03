@@ -135,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                         text: 'Sign In with Google',
                         imageName: 'google.png',
                         onPressed: () {
-                          LoginCubit.get(context).loginWithFaceBook();
+                          LoginCubit.get(context).googleSignInMethod();
                         },
                       ),
                     ],
