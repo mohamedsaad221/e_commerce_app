@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/shared/constance.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Widget defaultFormField({
   required TextEditingController controller,
@@ -112,6 +113,41 @@ Widget defaultLoginSocialBottom({
         ),
       ),
     );
+
+void showToast({
+  required String text,
+  required ShowToastColor state,
+
+}) =>  Fluttertoast.showToast(
+    msg: text,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 5,
+    backgroundColor: chooseToastColor(state),
+    textColor: Colors.white,
+    fontSize: 16.0
+);
+
+enum ShowToastColor {SUCCESS, ERROR, WARING}
+
+Color chooseToastColor(ShowToastColor state) {
+
+  Color color;
+
+  switch(state) {
+    case ShowToastColor.SUCCESS:
+      color = Colors.green;
+      break;
+    case ShowToastColor.ERROR:
+      color = Colors.red;
+      break;
+    case ShowToastColor.WARING:
+      color = Colors.amberAccent;
+      break;
+
+  }
+  return color;
+}
 
 
 

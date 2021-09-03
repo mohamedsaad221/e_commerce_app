@@ -1,7 +1,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/models/user_model.dart';
+import 'package:e_commerce_app/modules/home/home_screen.dart';
 import 'package:e_commerce_app/modules/login/cubit/states.dart';
+import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,34 +60,32 @@ class LoginCubit extends Cubit<LoginStates> {
     return await _userCollectionReference.doc(uid).get();
   }
 
-  void loginWithFaceBook() async{
+  Future loginWithFaceBook() async{
 
     emit(LoginWithFaceBookLoadingState());
 
 
-    final LoginResult loginResult = await FacebookAuth.instance.login();
+    final LoginResult result = await FacebookAuth.instance.login();
 
-    // Create a credential from the access token
-   if(loginResult.status == LoginStatus.success) {
-     final  accessToken =  loginResult.accessToken!.token;
-     final faceCredential = FacebookAuthProvider.credential(accessToken);
+    if(result.status == LoginStatus.success){
+      // Create a credential from the access token
+      final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.token);
+      // Once signed in, return the UserCredential
+       await FirebaseAuth.instance.signInWithCredential(credential)
+           .then((user) {
+             saveUser(user);
+             emit(LoginWithFaceBookSuccessState());
+       })
+           .catchError((error){
+             emit(LoginWithFaceBookErrorState(error));
+       });
+    }
 
-     // Once signed in, return the UserCredential
-     await FirebaseAuth.instance.signInWithCredential(faceCredential).then((user) {
-       saveUser(user);
-       emit(LoginWithFaceBookSuccessState());
-       //navigate to home layout here
-     }).catchError((error){
-       emit(LoginWithFaceBookErrorState(error));
-     });
-
-   }
-
-
+    return null;
 
   }
 
-  void googleSignInMethod() async {
+  void googleSignInMethod(context) async {
 
     emit(LoginWithGoogleLoadingState());
 
@@ -100,7 +100,7 @@ class LoginCubit extends Cubit<LoginStates> {
     await _auth.signInWithCredential(googleCredential).then((user) async {
       saveUser(user);
       emit(LoginWithGoogleSuccessState());
-      //navigate to home layout here
+      navigateAndFinish(context, HomeScreen());
       print(user);
     }).catchError((error) {
       emit(LoginWithGoogleErrorState(error));

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/home/home_screen.dart';
 import 'package:e_commerce_app/modules/login/cubit/cubit.dart';
 import 'package:e_commerce_app/modules/login/cubit/states.dart';
 import 'package:e_commerce_app/modules/login/login_screen.dart';
@@ -21,7 +22,14 @@ class RegisterScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(state is RegisterErrorState){
+            showToast(text: state.error, state: ShowToastColor.ERROR);
+          }
+          if(state is CreateUserSuccessState) {
+            navigateAndFinish(context, HomeScreen());
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -49,94 +57,92 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   child: Form(
                     key: formKey,
-                    child: Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CustomText(
-                            text: 'Sign Up',
-                            fontSize: 30.0,
-                          ),
-                          SizedBox(height: 30),
-                          CustomTextFormField(
-                            controller: nameController,
-                            type: TextInputType.name,
-                            validate: (value) {
-                              if (value.isEmpty) {
-                                return 'name must not be empty';
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: 'Sign Up',
+                          fontSize: 30.0,
+                        ),
+                        SizedBox(height: 30),
+                        CustomTextFormField(
+                          controller: nameController,
+                          type: TextInputType.name,
+                          validate: (value) {
+                            if (value.isEmpty) {
+                              return 'name must not be empty';
+                            }
+                            return null;
+                          },
+                          hint: 'username',
+                          text: 'Name',
+                        ),
+                        SizedBox(height: 40.0),
+                        CustomTextFormField(
+                          controller: emailController,
+                          type: TextInputType.emailAddress,
+                          validate: (value) {
+                            if (value.isEmpty) {
+                              return 'email must not be empty';
+                            }
+                            return null;
+                          },
+                          hint: 'name@example.com',
+                          text: 'Email',
+                        ),
+                        SizedBox(height: 40.0),
+                        CustomTextFormField(
+                          controller: phoneController,
+                          type: TextInputType.phone,
+                          validate: (value) {
+                            if (value.isEmpty) {
+                              return 'phone must not be empty';
+                            }
+                            return null;
+                          },
+                          hint: '01xxxxxxxxx',
+                          text: 'Phone',
+                        ),
+                        SizedBox(height: 40.0),
+                        CustomTextFormField(
+                          controller: passwordController,
+                          type: TextInputType.visiblePassword,
+                          validate: (value) {
+                            if (value.isEmpty) {
+                              return 'password must not be empty';
+                            }
+                            return null;
+                          },
+                          hint: '********',
+                          text: 'Password',
+                          isPassword: LoginCubit.get(context).isPassword,
+                          suffixIcon: LoginCubit.get(context).suffix,
+                          suffixPressed: () => LoginCubit.get(context)
+                              .changePasswordVisibility(),
+                        ),
+                        SizedBox(height: 20),
+                        Conditional.single(
+                          context: context,
+                          conditionBuilder: (context) =>
+                              state is! LoginErrorState,
+                          widgetBuilder: (context) => CustomButton(
+                            text: 'SIGN Up',
+                            onPressed: () {
+                              formKey.currentState!.save();
+                              if (formKey.currentState!.validate()) {
+                                LoginCubit.get(context).userRegister(
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  phone: phoneController.text,
+                                );
                               }
-                              return null;
                             },
-                            hint: 'username',
-                            text: 'Name',
                           ),
-                          SizedBox(height: 40.0),
-                          CustomTextFormField(
-                            controller: emailController,
-                            type: TextInputType.emailAddress,
-                            validate: (value) {
-                              if (value.isEmpty) {
-                                return 'email must not be empty';
-                              }
-                              return null;
-                            },
-                            hint: 'name@example.com',
-                            text: 'Email',
-                          ),
-                          SizedBox(height: 40.0),
-                          CustomTextFormField(
-                            controller: phoneController,
-                            type: TextInputType.phone,
-                            validate: (value) {
-                              if (value.isEmpty) {
-                                return 'phone must not be empty';
-                              }
-                              return null;
-                            },
-                            hint: '01xxxxxxxxx',
-                            text: 'Phone',
-                          ),
-                          SizedBox(height: 40.0),
-                          CustomTextFormField(
-                            controller: passwordController,
-                            type: TextInputType.visiblePassword,
-                            validate: (value) {
-                              if (value.isEmpty) {
-                                return 'password must not be empty';
-                              }
-                              return null;
-                            },
-                            hint: '********',
-                            text: 'Password',
-                            isPassword: LoginCubit.get(context).isPassword,
-                            suffixIcon: LoginCubit.get(context).suffix,
-                            suffixPressed: () => LoginCubit.get(context)
-                                .changePasswordVisibility(),
-                          ),
-                          SizedBox(height: 20),
-                          Conditional.single(
-                            context: context,
-                            conditionBuilder: (context) =>
-                                state is! LoginErrorState,
-                            widgetBuilder: (context) => CustomButton(
-                              text: 'SIGN Up',
-                              onPressed: () {
-                                formKey.currentState!.save();
-                                if (formKey.currentState!.validate()) {
-                                  LoginCubit.get(context).userRegister(
-                                    name: nameController.text,
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                    phone: phoneController.text,
-                                  );
-                                }
-                              },
-                            ),
-                            fallbackBuilder: (context) =>
-                                Center(child: CircularProgressIndicator()),
-                          ),
-                        ],
-                      ),
+                          fallbackBuilder: (context) =>
+                              Center(child: CircularProgressIndicator()),
+                        ),
+                      ],
                     ),
                   ),
                 ),

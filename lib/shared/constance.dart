@@ -17,3 +17,5 @@ MaterialColor myGreen = const MaterialColor(
     900: const Color(0xFF00C569),
   },
 );
+
+String uId = '';

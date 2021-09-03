@@ -30,9 +30,9 @@ class CustomSocialButton extends StatelessWidget {
         onPressed: onPressed,
         child: Row(
           children: [
-            SizedBox(width: 20),
+            SizedBox(width: 10),
             Image.asset('assets/images/$imageName'),
-            SizedBox(width: 70),
+            SizedBox(width: 50),
             CustomText(
               text: text,
               alignment: Alignment.center,

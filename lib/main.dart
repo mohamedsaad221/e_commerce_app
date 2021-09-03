@@ -1,5 +1,9 @@
+import 'package:bloc/bloc.dart';
+import 'package:e_commerce_app/modules/home/home_screen.dart';
 import 'package:e_commerce_app/modules/login/login_screen.dart';
 import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/my_bloc_observer.dart';
+import 'package:e_commerce_app/shared/network/local/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,11 +12,27 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await CacheHelper.init();
+  Bloc.observer = MyBlocObserver();
 
-  runApp(MyApp());
+  late Widget widget;
+  String? uId;
+  uId = CacheHelper.getData(key: 'uId');
+
+  if(uId != null ) {
+    widget = HomeScreen();
+  } else {
+    widget = LoginScreen();
+  }
+
+  runApp(MyApp(widget));
 }
 
 class MyApp extends StatelessWidget {
+
+  final startWidget;
+
+  MyApp(this.startWidget);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +53,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
 
       ),
-      home: LoginScreen(),
+      home: startWidget,
     );
   }
 }
