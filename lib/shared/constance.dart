@@ -1,4 +1,9 @@
+import 'package:e_commerce_app/modules/login/login_screen.dart';
+import 'package:e_commerce_app/shared/network/local/shared_pref.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'components/components.dart';
 
 const primaryColor = Color.fromRGBO(0, 197, 105, 1.0);
 
@@ -19,3 +24,11 @@ MaterialColor myGreen = const MaterialColor(
 );
 
 String uId = '';
+
+
+void signOut(BuildContext context){
+  CacheHelper.removeData(key: 'uId').then((value){
+    FirebaseAuth.instance.signOut();
+    navigateAndFinish(context, LoginScreen());
+  });
+}

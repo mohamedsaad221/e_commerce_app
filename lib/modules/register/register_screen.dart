@@ -6,6 +6,7 @@ import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:e_commerce_app/shared/components/custom_button.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
 import 'package:e_commerce_app/shared/components/custom_text_form_field.dart';
+import 'package:e_commerce_app/shared/network/local/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
@@ -27,7 +28,9 @@ class RegisterScreen extends StatelessWidget {
             showToast(text: state.error, state: ShowToastColor.ERROR);
           }
           if(state is CreateUserSuccessState) {
-            navigateAndFinish(context, HomeScreen());
+            CacheHelper.saveData(key: 'uId', value: state.uId).then((value) {
+              navigateAndFinish(context, HomeScreen());
+            });
           }
         },
         builder: (context, state) {

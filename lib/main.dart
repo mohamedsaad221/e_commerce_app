@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/modules/home/home_screen.dart';
 import 'package:e_commerce_app/modules/login/login_screen.dart';
+import 'package:e_commerce_app/modules/splash/splash_screen.dart';
 import 'package:e_commerce_app/shared/constance.dart';
 import 'package:e_commerce_app/shared/my_bloc_observer.dart';
 import 'package:e_commerce_app/shared/network/local/shared_pref.dart';
@@ -30,7 +31,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
 
-  final startWidget;
+  final Widget  startWidget;
 
   MyApp(this.startWidget);
 
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
 
       ),
-      home: startWidget,
+      // home: startWidget,
+      home: SplashScreen(startWidget: startWidget),
     );
   }
 }

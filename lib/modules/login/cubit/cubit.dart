@@ -166,7 +166,7 @@ class LoginCubit extends Cubit<LoginStates> {
         .collection('users')
         .doc(uId)
         .set(model.toMap()).then((value) {
-      emit(CreateUserSuccessState());
+      emit(CreateUserSuccessState(uId));
     }).catchError((error){
       print(error.toString());
       emit(CreateUserErrorState(error.toString()));

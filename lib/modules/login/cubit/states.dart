@@ -53,7 +53,11 @@ class RegisterErrorState extends LoginStates {
   RegisterErrorState(this.error);
 }
 
-class CreateUserSuccessState extends LoginStates {}
+class CreateUserSuccessState extends LoginStates {
+  final String uId;
+
+  CreateUserSuccessState(this.uId);
+}
 
 class CreateUserErrorState extends LoginStates {
   final error;
