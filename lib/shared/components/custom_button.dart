@@ -9,12 +9,16 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color color;
   final Color textColor;
+  final double radius;
+  final double padding;
 
   CustomButton({
     required this.onPressed,
     this.text = 'write text',
     this.textColor = Colors.white,
     this.color = primaryColor,
+    this.radius = 10.0,
+    this.padding = 18.0,
   });
 
   @override
@@ -23,11 +27,11 @@ class CustomButton extends StatelessWidget {
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(radius),
           ),
         ),
         backgroundColor: MaterialStateProperty.all<Color>(color),
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(18)),
+        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(padding)),
       ),
       onPressed: onPressed,
       child: CustomText(

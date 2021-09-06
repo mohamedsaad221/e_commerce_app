@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/shared/components/components.dart';
+import 'package:e_commerce_app/shared/components/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -86,15 +87,10 @@ class _SplashScreenState extends State<SplashScreen> {
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: Text(
-                'SCANNING',
-                style: TextStyle(
-                  fontFamily: 'SF Pro Display',
-                  fontSize: 14,
-                  color: const Color(0xffffffff),
-                  letterSpacing: 8.12,
-                ),
-                textAlign: TextAlign.left,
+              child: CustomText(
+                text: 'SCANNING',
+                fontSize: 14,
+                alignment: Alignment.centerLeft,
               ),
             ),
           ),
