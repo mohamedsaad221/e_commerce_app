@@ -7,6 +7,8 @@ import 'components/components.dart';
 
 const primaryColor = Color.fromRGBO(0, 197, 105, 1.0);
 
+const myGrey = Color.fromRGBO(221, 221, 221, 1.0);
+
 MaterialColor myGreen = const MaterialColor(
   0xFF00C569,
   const {

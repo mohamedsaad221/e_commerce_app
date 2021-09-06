@@ -1,7 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/layouts/home_layout.dart';
 import 'package:e_commerce_app/models/user_model.dart';
-import 'package:e_commerce_app/modules/home/home_screen.dart';
 import 'package:e_commerce_app/modules/login/cubit/states.dart';
 import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -100,7 +100,7 @@ class LoginCubit extends Cubit<LoginStates> {
     await _auth.signInWithCredential(googleCredential).then((user) async {
       saveUser(user);
       emit(LoginWithGoogleSuccessState());
-      navigateAndFinish(context, HomeScreen());
+      navigateAndFinish(context, HomeLayout());
       print(user);
     }).catchError((error) {
       emit(LoginWithGoogleErrorState(error));

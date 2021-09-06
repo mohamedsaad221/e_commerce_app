@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/modules/home/home_screen.dart';
+import 'package:e_commerce_app/layouts/home_layout.dart';
 import 'package:e_commerce_app/modules/login/cubit/cubit.dart';
 import 'package:e_commerce_app/modules/login/cubit/states.dart';
 import 'package:e_commerce_app/modules/login/login_screen.dart';
@@ -29,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
           }
           if(state is CreateUserSuccessState) {
             CacheHelper.saveData(key: 'uId', value: state.uId).then((value) {
-              navigateAndFinish(context, HomeScreen());
+              navigateAndFinish(context, HomeLayout());
             });
           }
         },
