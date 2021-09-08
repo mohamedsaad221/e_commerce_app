@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/layouts/home_layout.dart';
-import 'package:e_commerce_app/modules/login/cubit/cubit.dart';
-import 'package:e_commerce_app/modules/login/cubit/states.dart';
+import 'package:e_commerce_app/modules/login/cubit/login_cubit.dart';
+import 'package:e_commerce_app/modules/login/cubit/login_states.dart';
 import 'package:e_commerce_app/modules/login/login_screen.dart';
 import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:e_commerce_app/shared/components/custom_button.dart';
@@ -24,10 +24,10 @@ class RegisterScreen extends StatelessWidget {
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
-          if(state is RegisterErrorState){
+          if (state is RegisterErrorState) {
             showToast(text: state.error, state: ShowToastColor.ERROR);
           }
-          if(state is CreateUserSuccessState) {
+          if (state is CreateUserSuccessState) {
             CacheHelper.saveData(key: 'uId', value: state.uId).then((value) {
               navigateAndFinish(context, HomeLayout());
             });
@@ -127,7 +127,8 @@ class RegisterScreen extends StatelessWidget {
                         Conditional.single(
                           context: context,
                           conditionBuilder: (context) =>
-                              state is! LoginErrorState,
+                          state is! RegisterLoadingState && state is! RegisterSuccessState,
+
                           widgetBuilder: (context) => CustomButton(
                             text: 'SIGN Up',
                             onPressed: () {

@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/layouts/cubit/home_layout_cubit.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
+import 'package:e_commerce_app/shared/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,9 +14,15 @@ class HomeLayout extends StatelessWidget {
       child: BlocConsumer<HomeLayoutCubit, HomeLayoutState>(
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, Object? state) {
+          
           var cubit = HomeLayoutCubit.get(context);
 
           return Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(onPressed: (){signOut(context);}, icon: Icon(Icons.logout))
+              ],
+            ),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: cubit.currentIndex,
               onTap: (index) {

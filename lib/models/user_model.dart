@@ -13,22 +13,25 @@ class UserModel {
     this.phone,
   });
 
-  UserModel.fromJson(Map<String , dynamic> json){
-    name = json['name'];
-    email = json['name'];
-    uId = json['uId'];
-    phone = json['phone'];
-    image = json['image'];
+  UserModel.fromMap(Map<String, dynamic>? map) {
+    if (map == null) {
+      return;
+    }
 
+    name = map['name'];
+    email = map['name'];
+    uId = map['uId'];
+    phone = map['phone'];
+    image = map['image'];
   }
 
-  Map<String , dynamic> toMap() {
+  toMap() {
     return {
-      'name':name,
-      'email':email,
-      'uId':uId,
-      'phone':phone,
-      'image':image,
+      'name': name,
+      'email': email,
+      'uId': uId,
+      'phone': phone,
+      'image': image,
     };
   }
 }

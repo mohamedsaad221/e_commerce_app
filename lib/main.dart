@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce_app/modules/home/home_screen.dart';
+import 'package:e_commerce_app/layouts/home_layout.dart';
 import 'package:e_commerce_app/modules/login/login_screen.dart';
 import 'package:e_commerce_app/modules/splash/splash_screen.dart';
 import 'package:e_commerce_app/shared/constance.dart';
@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await CacheHelper.init();
@@ -20,8 +19,8 @@ void main() async {
   String? uId;
   uId = CacheHelper.getData(key: 'uId');
 
-  if(uId != null ) {
-    widget = HomeScreen();
+  if (uId != null) {
+    widget = HomeLayout();
   } else {
     widget = LoginScreen();
   }
@@ -30,8 +29,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-
-  final Widget  startWidget;
+  final Widget startWidget;
 
   MyApp(this.startWidget);
 
@@ -52,11 +50,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         scaffoldBackgroundColor: Colors.white,
-
       ),
-      // home: startWidget,
       home: SplashScreen(startWidget: startWidget),
     );
   }
 }
-
