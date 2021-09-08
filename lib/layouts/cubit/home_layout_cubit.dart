@@ -40,6 +40,7 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
         .get()
         .then((value) {
       userModel = UserModel.fromMap(value.data());
+      print('name = ${userModel.name}');
       emit(HomeGetUserSuccessState());
     }).catchError((error) {
       emit(HomeGetUserErrorState(error.toString()));
