@@ -25,7 +25,7 @@ MaterialColor myGreen = const MaterialColor(
   },
 );
 
-String uId = '';
+String? uId;
 
 
 void signOut(BuildContext context){

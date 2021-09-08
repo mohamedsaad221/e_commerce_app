@@ -173,6 +173,7 @@ class LoginCubit extends Cubit<LoginStates> {
     });
   }
 
+  final isPadding = true;
 
 
 }
