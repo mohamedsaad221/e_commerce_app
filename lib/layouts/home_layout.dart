@@ -18,11 +18,6 @@ class HomeLayout extends StatelessWidget {
           var cubit = HomeLayoutCubit.get(context);
 
           return Scaffold(
-            appBar: AppBar(
-              actions: [
-                IconButton(onPressed: (){signOut(context);}, icon: Icon(Icons.logout))
-              ],
-            ),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: cubit.currentIndex,
               onTap: (index) {

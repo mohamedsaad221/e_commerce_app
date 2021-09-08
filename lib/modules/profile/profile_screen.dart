@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/shared/constance.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -5,6 +6,13 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Profile'));
+    return Center(
+      child: IconButton(
+        onPressed: () {
+          signOut(context);
+        },
+        icon: Icon(Icons.logout),
+      ),
+    );
   }
 }
