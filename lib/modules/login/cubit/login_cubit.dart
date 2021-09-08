@@ -101,6 +101,7 @@ class LoginCubit extends Cubit<LoginStates> {
   }
 
   void saveUserCredential(UserCredential userData) async {
+
     UserModel userModel = UserModel(
       uId: userData.user!.uid,
       email: userData.user!.email,

@@ -71,6 +71,8 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
             categories.add(CategoryModel.fromMap(value.data()));
           });
 
+          print('Categories length = $categories');
+
       emit(HomeGetCategoriesSuccessState());
     }).catchError((error) {
       emit(HomeGetCategoriesErrorState(error.toString()));
