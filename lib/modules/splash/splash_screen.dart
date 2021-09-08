@@ -5,18 +5,14 @@ import 'package:e_commerce_app/shared/components/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
-
   final Widget startWidget;
   const SplashScreen({Key? key, required this.startWidget}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState( startWidget);
+  _SplashScreenState createState() => _SplashScreenState(startWidget);
 }
 
-
-
 class _SplashScreenState extends State<SplashScreen> {
-
   final Widget startWidget;
 
   _SplashScreenState(this.startWidget);
@@ -24,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3),(){
+    Timer(Duration(seconds: 4),(){
       navigateAndFinish(context, startWidget);
     });
   }
@@ -61,8 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       height: 20,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image:
-                          const AssetImage('assets/images/top_left.png'),
+                          image: const AssetImage('assets/images/top_left.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -72,8 +67,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       height: 20,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: const AssetImage(
-                              'assets/images/top_right.png'),
+                          image:
+                              const AssetImage('assets/images/top_right.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -90,7 +85,9 @@ class _SplashScreenState extends State<SplashScreen> {
               child: CustomText(
                 text: 'SCANNING',
                 fontSize: 14,
-                alignment: Alignment.centerLeft,
+                letterSpacing: 8.12,
+                alignment: Alignment.bottomCenter,
+                color: Colors.white,
               ),
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/layouts/cubit/home_layout_cubit.dart';
 import 'package:e_commerce_app/modules/category/category_productes.dart';
 import 'package:e_commerce_app/modules/details/details_screen.dart';
 import 'package:e_commerce_app/modules/search/search_screen.dart';
@@ -5,85 +6,94 @@ import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
 import 'package:e_commerce_app/shared/constance.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(
-          top: 100.0,
-          left: 20.0,
-          right: 20.0,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  navigateTo(context, SearchScreen());
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                    color: myGrey,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Icon(
-                      Icons.search,
+    return BlocConsumer<HomeLayoutCubit, HomeLayoutState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        // var cubit = HomeLayoutCubit.get(context);
+
+        return Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.only(
+              top: 100.0,
+              left: 20.0,
+              right: 20.0,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      navigateTo(context, SearchScreen());
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                        color: myGrey,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Icon(
+                          Icons.search,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(height: 40.0),
-              CustomText(
-                text: 'Categories',
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
-              SizedBox(height: 20.0),
-              _listViewCategory(context),
-              SizedBox(height: 20.0),
-              Row(
-                children: [
+                  SizedBox(height: 40.0),
                   CustomText(
-                    text: 'Best Selling',
+                    text: 'Categories',
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                   ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: CustomText(
-                      text: 'See all',
-                    ),
+                  SizedBox(height: 20.0),
+                  _listViewCategory(context),
+                  SizedBox(height: 20.0),
+                  Row(
+                    children: [
+                      CustomText(
+                        text: 'Best Selling',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () {},
+                        child: CustomText(
+                          text: 'See all',
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 20.0),
+                  _listViewProduct(context, size),
                 ],
               ),
-              SizedBox(height: 20.0),
-              _listViewProduct(context, size),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
   Widget _listViewCategory(BuildContext context) {
+    var cubit = HomeLayoutCubit.get(context);
     return Container(
       height: MediaQuery.of(context).size.height * 0.14,
       child: ListView.separated(
-          itemCount: 5,
+          itemCount: cubit.categories.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: (){
+              onTap: () {
                 navigateTo(context, CategoryProducts());
               },
               child: Column(
@@ -98,12 +108,13 @@ class ProductsScreen extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Image.network(
-                          'https://www.rebelsport.co.nz/globalassets/productimages/rebel/8149593/8149593_default_1.jpg?CatalogContentDetails-292774-600-600-75-0,0'),
+                        cubit.categories[index].image!,
+                      ),
                     ),
                   ),
                   SizedBox(height: 7),
                   CustomText(
-                    text: 'Men',
+                    text: cubit.categories[index].name!
                   ),
                 ],
               ),
@@ -115,11 +126,11 @@ class ProductsScreen extends StatelessWidget {
 
   Widget _listViewProduct(BuildContext context, Size size) {
     return Container(
-      height: size.height * 0.39,
+      height: size.height * 0.40,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => GestureDetector(
-          onTap: (){
+          onTap: () {
             navigateTo(context, DetailsScreen());
           },
           child: Column(
@@ -158,7 +169,6 @@ class ProductsScreen extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 color: primaryColor,
               ),
-
             ],
           ),
         ),
@@ -167,5 +177,4 @@ class ProductsScreen extends StatelessWidget {
       ),
     );
   }
-
 }

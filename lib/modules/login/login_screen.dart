@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/layouts/home_layout.dart';
-import 'package:e_commerce_app/modules/login/cubit/cubit.dart';
-import 'package:e_commerce_app/modules/login/cubit/states.dart';
+import 'package:e_commerce_app/modules/login/cubit/login_cubit.dart';
+import 'package:e_commerce_app/modules/login/cubit/login_states.dart';
 import 'package:e_commerce_app/modules/register/register_screen.dart';
 import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:e_commerce_app/shared/constance.dart';
@@ -36,8 +36,7 @@ class LoginScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             body: Padding(
-              padding:
-                  const EdgeInsets.only(top: 100.0, right: 20.0, left: 20.0),
+              padding: const EdgeInsets.only(top: 100.0, right: 20.0, left: 20.0),
               child: SingleChildScrollView(
                 child: Form(
                   key: formKey,
@@ -112,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                       Conditional.single(
                         context: context,
                         conditionBuilder: (context) =>
-                            state is! LoginErrorState,
+                            state is! LoginLoadingState && state is! LoginSuccessState,
                         widgetBuilder: (context) => CustomButton(
                           text: 'SIGN IN',
                           onPressed: () {
@@ -124,8 +123,7 @@ class LoginScreen extends StatelessWidget {
                             }
                           },
                         ),
-                        fallbackBuilder: (context) =>
-                            Center(child: CircularProgressIndicator()),
+                        fallbackBuilder: (context) => Center(child: CircularProgressIndicator()),
                       ),
                       SizedBox(height: 20.0),
                       CustomText(

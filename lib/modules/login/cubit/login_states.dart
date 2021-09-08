@@ -21,8 +21,7 @@ class LoginPasswordVisibility extends LoginStates {}
 
 class LoginWithFaceBookLoadingState extends LoginStates {}
 
-class LoginWithFaceBookSuccessState extends LoginStates {
-}
+class LoginWithFaceBookSuccessState extends LoginStates {}
 
 class LoginWithFaceBookErrorState extends LoginStates {
   final error;
@@ -32,8 +31,7 @@ class LoginWithFaceBookErrorState extends LoginStates {
 
 class LoginWithGoogleLoadingState extends LoginStates {}
 
-class LoginWithGoogleSuccessState extends LoginStates {
-}
+class LoginWithGoogleSuccessState extends LoginStates {}
 
 class LoginWithGoogleErrorState extends LoginStates {
   final error;
@@ -66,3 +64,4 @@ class CreateUserErrorState extends LoginStates {
 }
 
 class RegisterPasswordVisibility extends LoginStates {}
+

@@ -8,6 +8,7 @@ class CustomText extends StatelessWidget {
   final double height;
   final int? maxLine;
   final FontWeight? fontWeight;
+  final double? letterSpacing;
 
   CustomText({
     this.text = '',
@@ -17,6 +18,7 @@ class CustomText extends StatelessWidget {
     this.height = 1,
     this.maxLine,
     this.fontWeight,
+    this.letterSpacing = 0,
   });
 
   @override
@@ -30,6 +32,7 @@ class CustomText extends StatelessWidget {
           height: height,
           fontSize: fontSize,
           fontWeight: fontWeight,
+          letterSpacing: letterSpacing,
         ),
         maxLines: maxLine,
       ),
