@@ -9,6 +9,8 @@ class CustomText extends StatelessWidget {
   final int? maxLine;
   final FontWeight? fontWeight;
   final double? letterSpacing;
+  final TextOverflow? overflow;
+  final bool? softWrap;
 
   CustomText({
     this.text = '',
@@ -19,6 +21,8 @@ class CustomText extends StatelessWidget {
     this.maxLine,
     this.fontWeight,
     this.letterSpacing = 0,
+    this.overflow,
+    this.softWrap = true,
   });
 
   @override
@@ -35,6 +39,8 @@ class CustomText extends StatelessWidget {
           letterSpacing: letterSpacing,
         ),
         maxLines: maxLine,
+        overflow: overflow,
+        softWrap: softWrap,
       ),
     );
   }

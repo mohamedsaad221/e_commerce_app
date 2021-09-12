@@ -17,7 +17,7 @@ void main() async {
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
 
-  late Widget widget;
+  Widget widget;
   uId = CacheHelper.getData(key: 'uId');
 
   if (uId != null) {
@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) => HomeLayoutCubit()
             ..getCurrentUser()
-            ..getCategories(),
+            ..getCategories()
+            ..getAllProducts(),
         ),
       ],
       child: MaterialApp(
@@ -50,7 +51,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: myGreen,
           primaryColor: primaryColor,
           appBarTheme: AppBarTheme(
-            backwardsCompatibility: false,
             color: Colors.white,
             elevation: 0.0,
             systemOverlayStyle: SystemUiOverlayStyle(

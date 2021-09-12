@@ -24,58 +24,63 @@ class ProductsScreen extends StatelessWidget {
               left: 20.0,
               right: 20.0,
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      navigateTo(context, SearchScreen());
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(40.0)),
-                        color: myGrey,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Icon(
-                          Icons.search,
+            child: Container(
+              height: size.height,
+              width: size.width,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 15.0),
+                    GestureDetector(
+                      onTap: () {
+                        navigateTo(context, SearchScreen());
+                      },
+                      child: Container(
+                        width: size.width,
+                        height: 50,
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                          color: myGrey,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Icon(
+                            Icons.search,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 40.0),
-                  CustomText(
-                    text: 'Categories',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  SizedBox(height: 20.0),
-                  _listViewCategory(context),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      CustomText(
-                        text: 'Best Selling',
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: () {},
-                        child: CustomText(
-                          text: 'See all',
+                    SizedBox(height: 40.0),
+                    CustomText(
+                      text: 'Categories',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    SizedBox(height: 20.0),
+                    _listViewCategory(context),
+                    SizedBox(height: 20.0),
+                    Row(
+                      children: [
+                        CustomText(
+                          text: 'Best Selling',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  _listViewProduct(context, size),
-                ],
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () {},
+                          child: CustomText(
+                            text: 'See all',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    _listViewBestSellingProducts(context, size),
+                  ],
+                ),
               ),
             ),
           ),
@@ -94,28 +99,37 @@ class ProductsScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                navigateTo(context, CategoryProducts());
+                navigateTo(
+                  context,
+                  CategoryProducts(
+                    title: cubit.categories[index].name!,
+                    products: cubit.getProductsByCategory(
+                      cubit.categories[index].name!.toLowerCase(),
+                      cubit.categoryProducts,
+                    ),
+                  ),
+                );
               },
               child: Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.grey.shade100,
-                    ),
-                    width: MediaQuery.of(context).size.width * 0.17,
-                    height: MediaQuery.of(context).size.height * 0.07,
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Image.network(
-                        cubit.categories[index].image!,
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.grey.shade100,
+                      ),
+                      width: MediaQuery.of(context).size.width * 0.17,
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Image.network(
+                          cubit.categories[index].image!,
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(height: 7),
-                  CustomText(
-                    text: cubit.categories[index].name!
-                  ),
+                  Expanded(child: CustomText(text: cubit.categories[index].name!)),
                 ],
               ),
             );
@@ -124,46 +138,61 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget _listViewProduct(BuildContext context, Size size) {
+  Widget _listViewBestSellingProducts(BuildContext context, Size size,) {
     return Container(
       height: size.height * 0.40,
+      width: size.width,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
-            navigateTo(context, DetailsScreen());
+            navigateTo(
+                context,
+                DetailsScreen(
+                    HomeLayoutCubit.get(context).categoryProducts[index]));
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: size.height * 0.30,
-                width: size.width * 0.4,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.grey.shade100,
-                ),
-                child: Image.asset(
-                  'assets/images/watch.png',
-                  fit: BoxFit.fill,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  height: size.height * 0.30,
+                  width: size.width * 0.4,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Colors.grey.shade100,
+                  ),
+                  child: Image.network(
+                    HomeLayoutCubit.get(context).categoryProducts[index].image!,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
               SizedBox(height: 5.0),
               CustomText(
-                text: 'Leather Wristwatch',
+                text: HomeLayoutCubit.get(context).categoryProducts[index].name,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 alignment: Alignment.topLeft,
               ),
               SizedBox(height: 10.0),
-              CustomText(
-                text: 'Tag Heuer',
-                fontSize: 12,
-                alignment: Alignment.topLeft,
+              SizedBox(
+                width: size.width * 0.4,
+                child: CustomText(
+                  text: HomeLayoutCubit.get(context).categoryProducts[index].description!,
+                  fontSize: 12,
+                  maxLine: 1,
+                  softWrap: false,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               SizedBox(height: 10.0),
               CustomText(
-                text: '\$755',
+                text: '\$' +
+                    HomeLayoutCubit.get(context)
+                        .categoryProducts[index]
+                        .price,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 alignment: Alignment.topLeft,
@@ -173,7 +202,7 @@ class ProductsScreen extends StatelessWidget {
           ),
         ),
         separatorBuilder: (context, index) => SizedBox(width: 10.0),
-        itemCount: 6,
+        itemCount: HomeLayoutCubit.get(context).categoryProducts.length,
       ),
     );
   }
