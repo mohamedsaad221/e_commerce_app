@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class ProductModel {
   String? productId;
@@ -9,7 +7,7 @@ class ProductModel {
   String? size;
   String? category;
   dynamic price;
-  Color? color;
+  String? color;
 
   ProductModel({
     this.productId,
@@ -35,7 +33,7 @@ class ProductModel {
     size = map['size'];
     category = map['category'];
     price = map['price'];
-    color = HexColor(map['color']);
+    color = map['color'];
   }
 
 
