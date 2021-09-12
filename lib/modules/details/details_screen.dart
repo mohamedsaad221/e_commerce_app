@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/models/product_model.dart';
 import 'package:e_commerce_app/shared/components/custom_button.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
 import 'package:e_commerce_app/shared/constance.dart';
@@ -5,6 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class DetailsScreen extends StatelessWidget {
+
+  final ProductModel _product;
+
+  DetailsScreen(this._product);
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -12,41 +18,43 @@ class DetailsScreen extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: size.height * 0.3,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/commerceapp-ad96e.appspot.com/o/shirt.png?alt=media&token=b9ab6d50-25c3-4618-ae0c-747e6ad96e4e',
+            Expanded(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: size.width,
+                    height: size.height * 0.4,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          _product.image!,
+                        ),
+                        fit: BoxFit.fill,
                       ),
-                      fit: BoxFit.fill,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.arrow_back_ios),
-                      ),
-                      FloatingActionButton(
-                        onPressed: () {},
-                        backgroundColor: Colors.white,
-                        child: Icon(Icons.star_border_outlined),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.arrow_back_ios),
+                        ),
+                        FloatingActionButton(
+                          onPressed: () {},
+                          backgroundColor: Colors.white,
+                          child: Icon(Icons.star_border_outlined),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             SizedBox(height: 15.0),
             Expanded(
@@ -56,7 +64,7 @@ class DetailsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         CustomText(
-                          text: 'Nike Dri-FIT Long Sleeve',
+                          text: _product.name!,
                           fontSize: 26,
                           fontWeight: FontWeight.w700,
                           alignment: Alignment.center,
@@ -78,11 +86,11 @@ class DetailsScreen extends StatelessWidget {
                                 children: [
                                   CustomText(
                                     text: 'Size',
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     alignment: Alignment.centerLeft,
                                   ),
                                   CustomText(
-                                    text: 'XL',
+                                    text: _product.size!,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                     alignment: Alignment.centerRight,
@@ -102,7 +110,7 @@ class DetailsScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   CustomText(
-                                    text: 'Colour',
+                                    text: 'Color',
                                     fontSize: 14,
                                     alignment: Alignment.centerLeft,
                                   ),
@@ -110,7 +118,7 @@ class DetailsScreen extends StatelessWidget {
                                     width: 20,
                                     height: 20,
                                     decoration: BoxDecoration(
-                                      color: HexColor("#31407B"),
+                                      color: HexColor('${_product.color}'),
                                       borderRadius: BorderRadius.circular(7.0),
                                       border: Border.all(color: Colors.grey),
                                     ),
@@ -129,9 +137,8 @@ class DetailsScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         CustomText(
-                          text:
-                              'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.\nNike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.\nNike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.\n',
-                          fontSize: 14,
+                          text: _product.description!,
+                              fontSize: 14,
                           height: 2.2,
                         ),
                       ],
@@ -159,7 +166,7 @@ class DetailsScreen extends StatelessWidget {
                           height: 1.5,
                         ),
                         CustomText(
-                          text: '\$1500',
+                          text: '\$'+ _product.price!,
                           color: primaryColor,
                           fontSize: 18,
                           fontWeight: FontWeight.w700,

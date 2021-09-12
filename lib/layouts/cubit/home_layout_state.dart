@@ -28,3 +28,18 @@ class HomeGetCategoriesErrorState extends HomeLayoutState {
     print(error.toString());
   }
 }
+
+class HomeGetCategoryProductsLoadingState extends HomeLayoutState {}
+
+class HomeGetCategoryProductsSuccessState extends HomeLayoutState {
+  final List<ProductModel> products;
+
+  HomeGetCategoryProductsSuccessState(this.products);
+}
+
+class HomeGetCategoryProductsErrorState extends HomeLayoutState {
+  final String error;
+  HomeGetCategoryProductsErrorState(this.error) {
+    print(error.toString());
+  }
+}
