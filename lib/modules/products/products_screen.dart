@@ -104,8 +104,8 @@ class ProductsScreen extends StatelessWidget {
                   CategoryProducts(
                     title: cubit.categories[index].name!,
                     products: cubit.getProductsByCategory(
-                      cubit.categories[index].name!.toLowerCase(),
-                      cubit.categoryProducts,
+                      categoryName: cubit.categories[index].name!.toLowerCase(),
+                      allProducts: cubit.categoryProducts,
                     ),
                   ),
                 );

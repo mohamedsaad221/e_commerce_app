@@ -20,9 +20,9 @@ class HomeLayout extends StatelessWidget {
             onTap: (index) {
               cubit.changeIndex(index);
             },
-            elevation: 0,
+            elevation: 0.0,
             selectedItemColor: Colors.black,
-            backgroundColor: Colors.grey.shade50,
+            backgroundColor: Colors.white,
             items: [
               BottomNavigationBarItem(
                 activeIcon: Padding(

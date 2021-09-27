@@ -28,6 +28,8 @@ MaterialColor myGreen = const MaterialColor(
 
 String? uId;
 
+String tableName = 'cartProduct';
+
 
 void signOut(BuildContext context){
   CacheHelper.removeData(key: 'uId').then((value){

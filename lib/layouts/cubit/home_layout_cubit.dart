@@ -103,7 +103,8 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
   }
 
 
-  List<ProductModel> getProductsByCategory(String categoryName, List<ProductModel> allProducts) {
+  List<ProductModel> getProductsByCategory(
+      {required String categoryName, required List<ProductModel> allProducts}) {
     List<ProductModel> products = [];
 
     allProducts.forEach((element) {
@@ -117,9 +118,6 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
     return products;
 
   }
-
-
-
 
 
 //move collection docs into another collection

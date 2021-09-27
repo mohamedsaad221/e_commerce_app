@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/layouts/cubit/home_layout_cubit.dart';
 import 'package:e_commerce_app/layouts/home_layout.dart';
+import 'package:e_commerce_app/modules/cart/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/modules/login/login_screen.dart';
 import 'package:e_commerce_app/modules/splash/splash_screen.dart';
 import 'package:e_commerce_app/shared/constance.dart';
@@ -43,6 +44,10 @@ class MyApp extends StatelessWidget {
             ..getCurrentUser()
             ..getCategories()
             ..getAllProducts(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => CartCubit()
+            ..createDatabase(),
         ),
       ],
       child: MaterialApp(
