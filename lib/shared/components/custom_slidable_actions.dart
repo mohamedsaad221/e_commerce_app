@@ -4,10 +4,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class SlidableWidget<T> extends StatelessWidget {
   final Widget? child;
+  final Function()? onLeftTap;
+  final Function()? onRightTap;
 
 
   const SlidableWidget({
     required this.child,
+    required this.onLeftTap,
+    required this.onRightTap,
   });
 
   @override
@@ -24,7 +28,7 @@ class SlidableWidget<T> extends StatelessWidget {
         color: Colors.amber,
         icon: Icons.star,
         foregroundColor: Colors.white,
-        onTap: () {},
+        onTap: onLeftTap,
       ),
     ],
 
@@ -33,7 +37,7 @@ class SlidableWidget<T> extends StatelessWidget {
       IconSlideAction(
         color: Colors.red,
         icon: Icons.delete,
-        onTap: () {},
+        onTap: onRightTap,
       ),
     ],
   );

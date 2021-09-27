@@ -9,8 +9,8 @@ class HomeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutState>(
-      listener: (BuildContext context, state) {},
-      builder: (BuildContext context, Object? state) {
+      listener: (BuildContext context, HomeLayoutState state) {},
+      builder: (BuildContext context, HomeLayoutState state) {
 
         var cubit = HomeLayoutCubit.get(context);
 
@@ -20,9 +20,9 @@ class HomeLayout extends StatelessWidget {
             onTap: (index) {
               cubit.changeIndex(index);
             },
-            elevation: 0,
+            elevation: 0.0,
             selectedItemColor: Colors.black,
-            backgroundColor: Colors.grey.shade50,
+            backgroundColor: Colors.white,
             items: [
               BottomNavigationBarItem(
                 activeIcon: Padding(

@@ -1,12 +1,14 @@
+import 'package:e_commerce_app/models/cart_product_model.dart';
 import 'package:e_commerce_app/models/product_model.dart';
+import 'package:e_commerce_app/modules/cart/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/shared/components/custom_button.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
 import 'package:e_commerce_app/shared/constance.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class DetailsScreen extends StatelessWidget {
-
   final ProductModel _product;
 
   DetailsScreen(this._product);
@@ -30,7 +32,7 @@ class DetailsScreen extends StatelessWidget {
                         image: NetworkImage(
                           _product.image!,
                         ),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -75,7 +77,8 @@ class DetailsScreen extends StatelessWidget {
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width * 0.4,
-                              padding: EdgeInsets.all(16.0),
+                              height: 50,
+                              // padding: EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20.0),
                                 border: Border.all(width: 1.0, color: myGrey),
@@ -100,7 +103,8 @@ class DetailsScreen extends StatelessWidget {
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * 0.4,
-                              padding: EdgeInsets.all(14.0),
+                              height: 50,
+                              // padding: EdgeInsets.all(14.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20.0),
                                 border: Border.all(width: 1.0, color: myGrey),
@@ -138,7 +142,7 @@ class DetailsScreen extends StatelessWidget {
                         SizedBox(height: 10),
                         CustomText(
                           text: _product.description!,
-                              fontSize: 14,
+                          fontSize: 14,
                           height: 2.2,
                         ),
                       ],
@@ -147,47 +151,63 @@ class DetailsScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 15.0,
-                left: 15.0,
-                right: 15.0,
+                top: 10.0,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          text: 'PRICE',
-                          color: Colors.grey,
-                          fontSize: 12,
-                          alignment: Alignment.centerLeft,
-                          height: 1.5,
-                        ),
-                        CustomText(
-                          text: '\$'+ _product.price!,
-                          color: primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          alignment: Alignment.centerLeft,
-                          height: 1.5,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
                     child: Container(
                       width: 190,
-                      height: 100,
-                      padding: EdgeInsets.all(25),
-                      child: CustomButton(
-                        onPressed: () => {},
-                        text: 'ADD',
-                        radius: 5,
-                        padding: 5,
+                      height: 85,
+                      padding: EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: 'PRICE',
+                            color: Colors.grey,
+                            fontSize: 16,
+                            alignment: Alignment.centerLeft,
+                            height: 1.5,
+                          ),
+                          CustomText(
+                            text: '\$' + _product.price!,
+                            color: primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            alignment: Alignment.centerLeft,
+                            height: 1.5,
+                          ),
+                        ],
                       ),
                     ),
+                  ),
+                  BlocConsumer<CartCubit, CartState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      return Container(
+                        width: 190,
+                        height: 85,
+                        padding: EdgeInsets.all(15),
+                        child: CustomButton(
+                          onPressed: () {
+                            print('_product.productId = ${_product.productId}');
+                            CartCubit.get(context).insertToDatabase(
+                              CartProductModel(
+                                name: _product.name,
+                                image: _product.image,
+                                price: _product.price,
+                                quantity: 1,
+                                productId: _product.productId,
+                              ),
+                            );
+                          },
+                          text: 'ADD',
+                          radius: 4,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
