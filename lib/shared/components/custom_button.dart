@@ -32,6 +32,9 @@ class CustomButton extends StatelessWidget {
         ),
         backgroundColor: MaterialStateProperty.all<Color>(color),
         padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(padding)),
+        side: MaterialStateProperty.all(
+          BorderSide(width: 1, color: primaryColor),
+        ),
       ),
       onPressed: onPressed,
       child: CustomText(
