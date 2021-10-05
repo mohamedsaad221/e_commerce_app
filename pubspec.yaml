@@ -65,6 +65,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/menu_icons/
 
   fonts:
     - family: Jannah
