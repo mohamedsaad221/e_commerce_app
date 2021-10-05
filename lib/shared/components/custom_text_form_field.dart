@@ -17,9 +17,11 @@ class CustomTextFormField extends StatelessWidget {
   final IconData? suffixIcon;
   final bool isPassword;
   final Function? suffixPressed;
+  final Function(String?)? onSaved;
+  final FocusNode? focusNode;
 
-  CustomTextFormField({
-    required this.controller,
+  const CustomTextFormField({
+    this.controller,
     required this.type,
     required this.text,
     required this.hint,
@@ -32,11 +34,14 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.isPassword = false,
     this.suffixPressed,
+    this.onSaved,
+    this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       child: Column(
         children: [
           CustomText(
@@ -45,6 +50,9 @@ class CustomTextFormField extends StatelessWidget {
             color: Colors.grey.shade900,
           ),
           TextFormField(
+            focusNode: focusNode,
+            textAlignVertical: TextAlignVertical.center,
+            textAlign: TextAlign.left,
             controller: controller,
             keyboardType: type,
             onFieldSubmitted: (s) {
@@ -62,16 +70,17 @@ class CustomTextFormField extends StatelessWidget {
                 onTap!();
               }
             },
+            onSaved: onSaved,
             validator: validate,
             obscureText: isPassword,
             decoration: InputDecoration(
-              alignLabelWithHint: true,
               labelText: labelText,
               hintText: hint,
               hintStyle: TextStyle(
                 color: Colors.black,
               ),
-              prefixIcon: Icon(prefixIcon),
+
+              // prefixIcon: Icon(prefixIcon),
               suffixIcon: IconButton(
                 icon: Icon(suffixIcon),
                 onPressed: () {

@@ -1,9 +1,10 @@
-import 'package:e_commerce_app/shared/components/custom_list_tile.dart';
-import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/components/custom_list_tile.dart;
+
+import 'package:e_commerce_app/shared/helper/constance.dart';
+
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatelessWidgeProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

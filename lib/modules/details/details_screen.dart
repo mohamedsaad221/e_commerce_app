@@ -3,7 +3,7 @@ import 'package:e_commerce_app/models/product_model.dart';
 import 'package:e_commerce_app/modules/cart/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/shared/components/custom_button.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
-import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/helper/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -58,11 +58,11 @@ class DetailsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 15.0),
+            const SizedBox(height: 15.0),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                    padding: EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Column(
                       children: [
                         CustomText(
@@ -71,25 +71,24 @@ class DetailsScreen extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           alignment: Alignment.center,
                         ),
-                        SizedBox(height: 25.0),
+                        const SizedBox(height: 25.0),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width * 0.4,
-                              height: 50,
-                              // padding: EdgeInsets.all(16.0),
+                              height: 40,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(50.0),
                                 border: Border.all(width: 1.0, color: myGrey),
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
                                   CustomText(
                                     text: 'Size',
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     alignment: Alignment.centerLeft,
                                   ),
                                   CustomText(
@@ -103,15 +102,14 @@ class DetailsScreen extends StatelessWidget {
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * 0.4,
-                              height: 50,
-                              // padding: EdgeInsets.all(14.0),
+                              height: 40,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20.0),
                                 border: Border.all(width: 1.0, color: myGrey),
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
                                   CustomText(
                                     text: 'Color',
@@ -123,8 +121,7 @@ class DetailsScreen extends StatelessWidget {
                                     height: 20,
                                     decoration: BoxDecoration(
                                       color: HexColor('${_product.color}'),
-                                      borderRadius: BorderRadius.circular(7.0),
-                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                 ],
@@ -132,18 +129,18 @@ class DetailsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         CustomText(
                           text: 'Details',
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                           height: 1.5,
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         CustomText(
                           text: _product.description!,
                           fontSize: 14,
-                          height: 2.2,
+                          height: 2.5,
                         ),
                       ],
                     )),
@@ -151,18 +148,17 @@ class DetailsScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 10.0,
+                top: 5.0,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Container(
-                      width: 190,
-                      height: 85,
-                      padding: EdgeInsets.all(15),
+                    child:  Container(
+                      height: size.height * 0.104,
+                      padding: const EdgeInsets.all(15),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomText(
                             text: 'PRICE',
@@ -186,25 +182,26 @@ class DetailsScreen extends StatelessWidget {
                   BlocConsumer<CartCubit, CartState>(
                     listener: (context, state) {},
                     builder: (context, state) {
-                      return Container(
-                        width: 190,
-                        height: 85,
-                        padding: EdgeInsets.all(15),
-                        child: CustomButton(
-                          onPressed: () {
-                            print('_product.productId = ${_product.productId}');
-                            CartCubit.get(context).insertToDatabase(
-                              CartProductModel(
-                                name: _product.name,
-                                image: _product.image,
-                                price: _product.price,
-                                quantity: 1,
-                                productId: _product.productId,
-                              ),
-                            );
-                          },
-                          text: 'ADD',
-                          radius: 4,
+                      return Expanded(
+                        child: Container(
+                          height: size.height * 0.104,
+                          padding: const EdgeInsets.all(15),
+                          child: CustomButton(
+                            onPressed: () {
+                              print('_product.productId = ${_product.productId}');
+                              CartCubit.get(context).insertToDatabase(
+                                CartProductModel(
+                                  name: _product.name,
+                                  image: _product.image,
+                                  price: _product.price,
+                                  quantity: 1,
+                                  productId: _product.productId,
+                                ),
+                              );
+                            },
+                            text: 'ADD',
+                            radius: 4,
+                          ),
                         ),
                       );
                     },
