@@ -43,7 +43,7 @@ class RegisterScreen extends StatelessWidget {
                 onTap: () {
                   navigateAndFinish(context, LoginScreen());
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back_ios,
                   color: Colors.black,
                 ),
@@ -67,7 +67,7 @@ class RegisterScreen extends StatelessWidget {
                           text: 'Sign Up',
                           fontSize: 30.0,
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         CustomTextFormField(
                           controller: nameController,
                           type: TextInputType.name,
@@ -75,12 +75,11 @@ class RegisterScreen extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'name must not be empty';
                             }
-                            return null;
                           },
                           hint: 'username',
                           text: 'Name',
                         ),
-                        SizedBox(height: 40.0),
+                        const SizedBox(height: 40.0),
                         CustomTextFormField(
                           controller: emailController,
                           type: TextInputType.emailAddress,
@@ -88,12 +87,11 @@ class RegisterScreen extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'email must not be empty';
                             }
-                            return null;
                           },
                           hint: 'name@example.com',
                           text: 'Email',
                         ),
-                        SizedBox(height: 40.0),
+                        const SizedBox(height: 40.0),
                         CustomTextFormField(
                           controller: phoneController,
                           type: TextInputType.phone,
@@ -101,12 +99,11 @@ class RegisterScreen extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'phone must not be empty';
                             }
-                            return null;
                           },
                           hint: '01xxxxxxxxx',
                           text: 'Phone',
                         ),
-                        SizedBox(height: 40.0),
+                        const SizedBox(height: 40.0),
                         CustomTextFormField(
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
@@ -114,7 +111,6 @@ class RegisterScreen extends StatelessWidget {
                             if (value.isEmpty) {
                               return 'password must not be empty';
                             }
-                            return null;
                           },
                           hint: '********',
                           text: 'Password',
@@ -123,7 +119,7 @@ class RegisterScreen extends StatelessWidget {
                           suffixPressed: () => LoginCubit.get(context)
                               .changePasswordVisibility(),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Conditional.single(
                           context: context,
                           conditionBuilder: (context) =>
@@ -144,7 +140,7 @@ class RegisterScreen extends StatelessWidget {
                             },
                           ),
                           fallbackBuilder: (context) =>
-                              Center(child: CircularProgressIndicator()),
+                              const Center(child: const CircularProgressIndicator()),
                         ),
                       ],
                     ),

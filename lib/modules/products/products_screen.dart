@@ -4,7 +4,7 @@ import 'package:e_commerce_app/modules/details/details_screen.dart';
 import 'package:e_commerce_app/modules/search/search_screen.dart';
 import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
-import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/helper/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +15,6 @@ class ProductsScreen extends StatelessWidget {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutState>(
       listener: (context, state) {},
       builder: (context, state) {
-        // var cubit = HomeLayoutCubit.get(context);
 
         return Scaffold(
           body: Padding(
@@ -31,7 +30,7 @@ class ProductsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     GestureDetector(
                       onTap: () {
                         navigateTo(context, SearchScreen());
@@ -41,26 +40,26 @@ class ProductsScreen extends StatelessWidget {
                         height: 50,
                         alignment: Alignment.centerLeft,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(40.0)),
                           color: myGrey,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Icon(
+                          child: const Icon(
                             Icons.search,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 40.0),
+                    const SizedBox(height: 40.0),
                     CustomText(
                       text: 'Categories',
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     _listViewCategory(context),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Row(
                       children: [
                         CustomText(
@@ -68,7 +67,7 @@ class ProductsScreen extends StatelessWidget {
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         GestureDetector(
                           onTap: () {},
                           child: CustomText(
@@ -77,7 +76,7 @@ class ProductsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     _listViewBestSellingProducts(context, size),
                   ],
                 ),
@@ -121,20 +120,20 @@ class ProductsScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.17,
                       height: MediaQuery.of(context).size.height * 0.1,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Image.network(
                           cubit.categories[index].image!,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 7),
+                  const SizedBox(height: 7),
                   Expanded(child: CustomText(text: cubit.categories[index].name!)),
                 ],
               ),
             );
           },
-          separatorBuilder: (context, index) => SizedBox(width: 20)),
+          separatorBuilder: (context, index) => const SizedBox(width: 20)),
     );
   }
 
@@ -169,14 +168,14 @@ class ProductsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 5.0),
+              const SizedBox(height: 5.0),
               CustomText(
                 text: HomeLayoutCubit.get(context).categoryProducts[index].name,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 alignment: Alignment.topLeft,
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               SizedBox(
                 width: size.width * 0.4,
                 child: CustomText(
@@ -187,7 +186,7 @@ class ProductsScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               CustomText(
                 text: '\$' +
                     HomeLayoutCubit.get(context)
@@ -201,7 +200,7 @@ class ProductsScreen extends StatelessWidget {
             ],
           ),
         ),
-        separatorBuilder: (context, index) => SizedBox(width: 10.0),
+        separatorBuilder: (context, index) => const SizedBox(width: 10.0),
         itemCount: HomeLayoutCubit.get(context).categoryProducts.length,
       ),
     );

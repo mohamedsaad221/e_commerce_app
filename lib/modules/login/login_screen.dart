@@ -3,7 +3,7 @@ import 'package:e_commerce_app/modules/login/cubit/login_cubit.dart';
 import 'package:e_commerce_app/modules/login/cubit/login_states.dart';
 import 'package:e_commerce_app/modules/register/register_screen.dart';
 import 'package:e_commerce_app/shared/components/components.dart';
-import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/helper/constance.dart';
 import 'package:e_commerce_app/shared/components/custom_button.dart';
 import 'package:e_commerce_app/shared/components/custom_social_button.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
