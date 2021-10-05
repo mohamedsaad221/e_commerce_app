@@ -6,7 +6,7 @@ import 'package:e_commerce_app/models/user_model.dart';
 import 'package:e_commerce_app/modules/cart/cart_screen.dart';
 import 'package:e_commerce_app/modules/products/products_screen.dart';
 import 'package:e_commerce_app/modules/profile/profile_screen.dart';
-import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/helper/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';

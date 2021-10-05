@@ -4,17 +4,16 @@ import 'package:e_commerce_app/models/product_model.dart';
 import 'package:e_commerce_app/modules/details/details_screen.dart';
 import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
-import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/helper/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 
 class CategoryProducts extends StatelessWidget {
-
   final String title;
-  List<ProductModel> products;
+  final List<ProductModel> products;
 
-  CategoryProducts({
+  const CategoryProducts({
     Key? key,
     required this.title,
     required this.products,
@@ -27,7 +26,6 @@ class CategoryProducts extends StatelessWidget {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutState>(
       listener: (context, state) {},
       builder: (context, state) {
-
         print('//////////// products length ////////// ${products.length}');
 
         return Scaffold(
@@ -39,7 +37,7 @@ class CategoryProducts extends StatelessWidget {
               onTap: () {
                 navigateAndFinish(context, HomeLayout());
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.black,
               ),
@@ -56,19 +54,19 @@ class CategoryProducts extends StatelessWidget {
                   conditionBuilder: (context) => products.length > 0,
                   widgetBuilder: (context) => GridView.count(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
                     mainAxisSpacing: 20.0,
                     crossAxisSpacing: 1.0,
-                    childAspectRatio: 1 /1.8,
+                    childAspectRatio: 1 / 1.8,
                     children: List.generate(
                       products.length,
-                      (index) => _buildGridProduct(
-                          context, size, index, products),
+                      (index) =>
+                          _buildGridProduct(context, size, index, products),
                     ),
                   ),
                   fallbackBuilder: (context) =>
-                      Center(child: CircularProgressIndicator()),
+                      const Center(child: const CircularProgressIndicator()),
                 ),
               ),
             ),
@@ -78,7 +76,12 @@ class CategoryProducts extends StatelessWidget {
     );
   }
 
-  Widget _buildGridProduct(BuildContext context, Size size, int index, List<ProductModel> products) {
+  Widget _buildGridProduct(
+    BuildContext context,
+    Size size,
+    int index,
+    List<ProductModel> products,
+  ) {
     return Container(
       child: GestureDetector(
         onTap: () {
@@ -106,19 +109,19 @@ class CategoryProducts extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 5.0),
+              const SizedBox(height: 5.0),
               CustomText(
                 text: products[index].name!,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               CustomText(
                 text: products[index].description!,
                 fontSize: 12,
                 maxLine: 1,
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               CustomText(
                 text: '\$' + products[index].price!,
                 fontSize: 16,

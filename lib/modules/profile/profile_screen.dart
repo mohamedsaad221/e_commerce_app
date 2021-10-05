@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/helper/constance.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {

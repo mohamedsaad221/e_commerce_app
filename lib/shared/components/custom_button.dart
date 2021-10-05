@@ -1,5 +1,5 @@
 
-import 'package:e_commerce_app/shared/constance.dart';
+import 'package:e_commerce_app/shared/helper/constance.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_text.dart';

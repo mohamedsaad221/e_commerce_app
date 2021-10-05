@@ -2,10 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/layouts/cubit/home_layout_cubit.dart';
 import 'package:e_commerce_app/layouts/home_layout.dart';
 import 'package:e_commerce_app/modules/cart/cubit/cart_cubit.dart';
+import 'package:e_commerce_app/modules/checkout/cubit/cubit.dart';
 import 'package:e_commerce_app/modules/login/login_screen.dart';
 import 'package:e_commerce_app/modules/splash/splash_screen.dart';
-import 'package:e_commerce_app/shared/constance.dart';
-import 'package:e_commerce_app/shared/my_bloc_observer.dart';
+import 'package:e_commerce_app/shared/helper/constance.dart';
+import 'package:e_commerce_app/shared/helper/my_bloc_observer.dart';
 import 'package:e_commerce_app/shared/network/local/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,7 +34,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final Widget startWidget;
 
-  MyApp(this.startWidget);
+  const MyApp(this.startWidget);
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) => CartCubit()
             ..createDatabase(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => CheckoutCubit(),
         ),
       ],
       child: MaterialApp(
