@@ -82,21 +82,21 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
     });
   }
 
-  late List<ProductModel> categoryProducts;
+  late List<ProductModel> allProducts;
 
   void getAllProducts() async {
     emit(HomeGetCategoryProductsLoadingState());
 
-    categoryProducts = [];
+    allProducts = [];
 
     FirebaseFirestore.instance.collection('product').get().then((value) {
       value.docs.forEach((element) {
-        categoryProducts.add(ProductModel.fromMap(element.data()));
+        allProducts.add(ProductModel.fromMap(element.data()));
       });
 
-      print('//////////////////////////////////////////${categoryProducts.length}');
+      print('//////////////////////////////////////////${allProducts.length}');
 
-      emit(HomeGetCategoryProductsSuccessState(categoryProducts));
+      emit(HomeGetCategoryProductsSuccessState(allProducts));
     }).catchError((error) {
       emit(HomeGetCategoryProductsErrorState(error.toString()));
     });
@@ -117,6 +117,25 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
 
     return products;
 
+  }
+
+  late List<ProductModel> searchedProducts;
+
+  void searchProduct(String query) {
+    emit(SearchLoadingState());
+    searchedProducts = [];
+
+    if(query.isNotEmpty) {
+      searchedProducts.addAll(allProducts.where((product) {
+        final nameLower = product.name!.toLowerCase();
+        final searchLower = query.toLowerCase();
+
+        return nameLower.contains(searchLower);
+      }).toList());
+    }else{
+      searchedProducts.clear();
+    }
+     emit(SearchSuccessState());
   }
 
 
