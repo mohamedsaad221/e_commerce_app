@@ -15,6 +15,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // await SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
+
   await Firebase.initializeApp();
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
@@ -47,8 +53,7 @@ class MyApp extends StatelessWidget {
             ..getAllProducts(),
         ),
         BlocProvider(
-          create: (BuildContext context) => CartCubit()
-            ..createDatabase(),
+          create: (BuildContext context) => CartCubit()..createDatabase(),
         ),
         BlocProvider(
           create: (BuildContext context) => CheckoutCubit(),

@@ -18,3 +18,9 @@ class AppUpdateDatabaseState extends CartState{}
 class AppDeleteProductState extends CartState{}
 
 class AppGetTotalPriceFromDatabaseState extends CartState{}
+
+class ProductIncrementState extends CartState{}
+
+class ProductDecrementState extends CartState{}
+
+class CartClearDatabaseState extends CartState{}

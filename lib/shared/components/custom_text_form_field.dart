@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'custom_text.dart';
@@ -8,8 +7,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? type;
   final String? text;
   final String? hint;
-  final VoidCallback? onSubmit;
-  final Function? onChange;
+  final Function(String)? onSubmit;
+  final Function(String)? onChange;
   final FormFieldValidator? validate;
   final String? labelText;
   final IconData? prefixIcon;
@@ -55,21 +54,9 @@ class CustomTextFormField extends StatelessWidget {
             textAlign: TextAlign.left,
             controller: controller,
             keyboardType: type,
-            onFieldSubmitted: (s) {
-              if (onSubmit != null) {
-                onSubmit!();
-              }
-            },
-            onChanged: (s) {
-              if (onChange != null) {
-                onChange!(s);
-              }
-            },
-            onTap: () {
-              if (onTap != null) {
-                onTap!();
-              }
-            },
+            onFieldSubmitted: onSubmit,
+            onChanged: onChange,
+            onTap: onTap,
             onSaved: onSaved,
             validator: validate,
             obscureText: isPassword,

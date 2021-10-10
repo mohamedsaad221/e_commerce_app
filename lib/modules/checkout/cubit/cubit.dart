@@ -64,7 +64,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     emit(ChangeRadio());
   }
 
-  sendOrder({
+  Future<void> sendOrder({
     @required String? dateTime,
     @required List<CartProductModel>? products,
   }) async{

@@ -43,3 +43,7 @@ class HomeGetCategoryProductsErrorState extends HomeLayoutState {
     print(error.toString());
   }
 }
+
+class SearchLoadingState extends HomeLayoutState {}
+
+class SearchSuccessState extends HomeLayoutState {}

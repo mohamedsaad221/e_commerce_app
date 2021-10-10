@@ -15,6 +15,7 @@ class HomeLayout extends StatelessWidget {
         var cubit = HomeLayoutCubit.get(context);
 
         return Scaffold(
+          backgroundColor: Colors.white,
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.currentIndex,
             onTap: (index) {
