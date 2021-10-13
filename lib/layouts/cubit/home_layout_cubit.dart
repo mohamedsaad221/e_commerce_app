@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/models/category_model.dart';
@@ -9,7 +11,10 @@ import 'package:e_commerce_app/modules/profile/profile_screen.dart';
 import 'package:e_commerce_app/shared/helper/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 
 part 'home_layout_state.dart';
 
@@ -55,6 +60,8 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
         .then((value) {
       userModel = UserModel.fromMap(value.data());
       print('name = ${userModel!.name}');
+      print('name = ${userModel!.email}');
+      print('name = ${userModel!.email}');
       emit(HomeGetUserSuccessState());
     }).catchError((error) {
       emit(HomeGetUserErrorState(error.toString()));
@@ -138,5 +145,76 @@ class HomeLayoutCubit extends Cubit<HomeLayoutState> {
     });
   }
 
+  void updateUserData({
+     required String name,
+     required String phone,
+    String? image,
+  }) async {
+    UserModel model = UserModel(
+      name: name,
+      uId: userModel!.uId,
+      email: userModel!.email,
+      phone: phone,
+      image: image ?? userModel!.image,
+    );
 
-}
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(model.uId)
+        .update(model.toMap())
+        .then((value) {
+      getCurrentUser();
+    }).catchError((error) {
+      print(error.toString());
+      emit(HomeUpdateUserErrorState(error.toString()));
+    });
+  }
+
+  File? profileImage;
+  ImagePicker get picker => _picker;
+  final ImagePicker _picker = ImagePicker();
+
+
+  Future<void> getProfileImage() async {
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      emit(HomeProfileImagePickedSuccessState());
+    } else {
+      print('No image selected. ');
+      emit(HomeProfileImagePickedErrorState());
+    }
+  }
+
+  void uploadProfileImage({
+    required String name,
+    required String phone,
+  }) {
+    emit(HomeUpdateUserLoadingState());
+
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('users/${Uri.file(profileImage!.path).pathSegments.last}')
+        .putFile(profileImage!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        print(value);
+
+        updateUserData(
+          name: name,
+          phone: phone,
+          image: value,
+        );
+      }).catchError((error) {
+        print(error.toString());
+        emit(HomeUploadProfileImageSuccessState());
+      });
+    }).catchError((error) {
+      print(error.toString());
+      emit(HomeUploadProfileImageErrorState(error.toString()));
+    });
+  }
+
+  }
+

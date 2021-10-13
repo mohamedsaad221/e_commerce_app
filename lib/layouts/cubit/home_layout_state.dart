@@ -43,3 +43,24 @@ class HomeGetCategoryProductsErrorState extends HomeLayoutState {
     print(error.toString());
   }
 }
+
+class HomeUpdateUserErrorState extends HomeLayoutState {
+  final String error;
+  HomeUpdateUserErrorState(this.error) {
+    print(error.toString());
+  }
+}
+
+class HomeProfileImagePickedSuccessState extends HomeLayoutState {}
+
+class HomeProfileImagePickedErrorState extends HomeLayoutState {}
+
+class HomeUpdateUserLoadingState extends HomeLayoutState {}
+
+class HomeUploadProfileImageSuccessState extends HomeLayoutState {}
+
+class HomeUploadProfileImageErrorState extends HomeLayoutState {
+  final error;
+
+  HomeUploadProfileImageErrorState(this.error);
+}

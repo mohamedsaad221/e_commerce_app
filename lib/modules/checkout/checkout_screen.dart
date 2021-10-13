@@ -166,7 +166,6 @@ class CheckOutScreen extends StatelessWidget {
                         ? BlocConsumer<CartCubit, CartState>(
                             listener: (context, state) {},
                             builder: (context, state) {
-
                               var cartCubit = CartCubit.get(context);
 
                               return Align(
