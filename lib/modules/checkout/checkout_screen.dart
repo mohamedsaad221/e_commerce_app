@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/layouts/cubit/home_layout_cubit.dart';
+import 'package:e_commerce_app/layouts/home_layout.dart';
 import 'package:e_commerce_app/modules/cart/cart_screen.dart';
 import 'package:e_commerce_app/modules/cart/cubit/cart_cubit.dart';
 import 'package:e_commerce_app/modules/checkout/add_address_screen.dart';
@@ -175,11 +177,15 @@ class CheckOutScreen extends StatelessWidget {
                                   height: 50,
                                   child: CustomButton(
                                     onPressed: () {
-                                      // checkOutCubit.changeIndex(checkOutCubit.index + 1, context);
                                       checkOutCubit.sendOrder(
                                         dateTime: DateTime.now().toString(),
                                         products: cartCubit.cartProducts,
-                                      );
+                                      ).then((value){
+                                        cartCubit.cartProducts.clear();
+                                        cartCubit.clearDatabaseContent();
+                                        print(cartCubit.cartProducts);
+                                        HomeLayoutCubit.get(context).currentIndex = 0;
+                                      }).whenComplete(() => navigateAndFinish(context, HomeLayout()));
                                     },
                                     text: 'DELIVERY',
                                     radius: 5,

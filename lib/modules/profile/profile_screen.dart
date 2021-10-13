@@ -4,16 +4,18 @@ import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:e_commerce_app/shared/components/custom_list_tile.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
 import 'package:e_commerce_app/shared/helper/constance.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'edit_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<HomeLayoutCubit, HomeLayoutState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -90,6 +92,7 @@ class ProfileScreen extends StatelessWidget {
                         imageName: 'icon_exit.png',
                       ),
                     ],
+   
                   ),
                 ),
               ],

@@ -121,6 +121,7 @@ class CartCubit extends Cubit<CartState> {
     cartProducts[index].quantity = cartProducts[index].quantity! + 1;
     totalPrice += double.parse(cartProducts[index].price!);
     await updateProduct(cartProducts[index]);
+    emit(ProductIncrementState());
   }
 
   decreaseQuantity(int index) async {
@@ -130,5 +131,15 @@ class CartCubit extends Cubit<CartState> {
     cartProducts[index].quantity = cartProducts[index].quantity! - 1;
     totalPrice -= double.parse(cartProducts[index].price!);
     await updateProduct(cartProducts[index]);
+    emit(ProductDecrementState());
+
   }
+
+  clearDatabaseContent() async {
+    String path = join(await getDatabasesPath(), 'cart.db');
+    // Delete the database
+    await deleteDatabase(path);
+    emit(CartClearDatabaseState());
+  }
+
 }

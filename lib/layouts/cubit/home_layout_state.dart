@@ -44,6 +44,7 @@ class HomeGetCategoryProductsErrorState extends HomeLayoutState {
   }
 }
 
+
 class HomeUpdateUserErrorState extends HomeLayoutState {
   final String error;
   HomeUpdateUserErrorState(this.error) {
@@ -64,3 +65,7 @@ class HomeUploadProfileImageErrorState extends HomeLayoutState {
 
   HomeUploadProfileImageErrorState(this.error);
 }
+
+class SearchLoadingState extends HomeLayoutState {}
+
+class SearchSuccessState extends HomeLayoutState {}

@@ -5,6 +5,7 @@ import 'package:e_commerce_app/modules/search/search_screen.dart';
 import 'package:e_commerce_app/shared/components/components.dart';
 import 'package:e_commerce_app/shared/components/custom_text.dart';
 import 'package:e_commerce_app/shared/helper/constance.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +16,6 @@ class ProductsScreen extends StatelessWidget {
     return BlocConsumer<HomeLayoutCubit, HomeLayoutState>(
       listener: (context, state) {},
       builder: (context, state) {
-
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.only(
@@ -24,7 +24,7 @@ class ProductsScreen extends StatelessWidget {
               right: 20.0,
             ),
             child: Container(
-              height: size.height,
+              // height: size.height,
               width: size.width,
               child: SingleChildScrollView(
                 child: Column(
@@ -51,13 +51,13 @@ class ProductsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 40.0),
+                    const SizedBox(height: 30.0),
                     CustomText(
                       text: 'Categories',
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                     ),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 30.0),
                     _listViewCategory(context),
                     const SizedBox(height: 20.0),
                     Row(
@@ -91,7 +91,8 @@ class ProductsScreen extends StatelessWidget {
   Widget _listViewCategory(BuildContext context) {
     var cubit = HomeLayoutCubit.get(context);
     return Container(
-      height: MediaQuery.of(context).size.height * 0.14,
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      height: MediaQuery.of(context).size.height * 0.13,
       child: ListView.separated(
           itemCount: cubit.categories.length,
           scrollDirection: Axis.horizontal,
@@ -104,7 +105,7 @@ class ProductsScreen extends StatelessWidget {
                     title: cubit.categories[index].name!,
                     products: cubit.getProductsByCategory(
                       categoryName: cubit.categories[index].name!.toLowerCase(),
-                      allProducts: cubit.categoryProducts,
+                      allProducts: cubit.allProducts,
                     ),
                   ),
                 );
@@ -112,23 +113,27 @@ class ProductsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.grey.shade100,
-                      ),
-                      width: MediaQuery.of(context).size.width * 0.17,
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.network(
-                          cubit.categories[index].image!,
+                    child: Material(
+                      elevation: 1,
+                      borderRadius: BorderRadius.circular(50),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.white,
+                        ),
+                        width: MediaQuery.of(context).size.width * 0.17,
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Image.network(
+                            cubit.categories[index].image!,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 7),
-                  Expanded(child: CustomText(text: cubit.categories[index].name!)),
+                  const SizedBox(height: 10),
+                  CustomText(text: cubit.categories[index].name!),
                 ],
               ),
             );
@@ -148,29 +153,31 @@ class ProductsScreen extends StatelessWidget {
             navigateTo(
                 context,
                 DetailsScreen(
-                    HomeLayoutCubit.get(context).categoryProducts[index]));
+                    HomeLayoutCubit.get(context).allProducts[index]));
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: size.height * 0.30,
-                  width: size.width * 0.4,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.grey.shade100,
-                  ),
-                  child: Image.network(
-                    HomeLayoutCubit.get(context).categoryProducts[index].image!,
-                    fit: BoxFit.fill,
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    height: size.height * 0.30,
+                    width: size.width * 0.4,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.grey.shade100,
+                    ),
+                    child: Image.network(
+                      HomeLayoutCubit.get(context).allProducts[index].image!,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
               ),
               const SizedBox(height: 5.0),
               CustomText(
-                text: HomeLayoutCubit.get(context).categoryProducts[index].name,
+                text: HomeLayoutCubit.get(context).allProducts[index].name,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 alignment: Alignment.topLeft,
@@ -179,7 +186,7 @@ class ProductsScreen extends StatelessWidget {
               SizedBox(
                 width: size.width * 0.4,
                 child: CustomText(
-                  text: HomeLayoutCubit.get(context).categoryProducts[index].description!,
+                  text: HomeLayoutCubit.get(context).allProducts[index].description!,
                   fontSize: 12,
                   maxLine: 1,
                   softWrap: false,
@@ -190,7 +197,7 @@ class ProductsScreen extends StatelessWidget {
               CustomText(
                 text: '\$' +
                     HomeLayoutCubit.get(context)
-                        .categoryProducts[index]
+                        .allProducts[index]
                         .price,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -201,7 +208,7 @@ class ProductsScreen extends StatelessWidget {
           ),
         ),
         separatorBuilder: (context, index) => const SizedBox(width: 10.0),
-        itemCount: HomeLayoutCubit.get(context).categoryProducts.length,
+        itemCount: HomeLayoutCubit.get(context).allProducts.length,
       ),
     );
   }
