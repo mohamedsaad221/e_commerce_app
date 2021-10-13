@@ -44,6 +44,28 @@ class HomeGetCategoryProductsErrorState extends HomeLayoutState {
   }
 }
 
+
+class HomeUpdateUserErrorState extends HomeLayoutState {
+  final String error;
+  HomeUpdateUserErrorState(this.error) {
+    print(error.toString());
+  }
+}
+
+class HomeProfileImagePickedSuccessState extends HomeLayoutState {}
+
+class HomeProfileImagePickedErrorState extends HomeLayoutState {}
+
+class HomeUpdateUserLoadingState extends HomeLayoutState {}
+
+class HomeUploadProfileImageSuccessState extends HomeLayoutState {}
+
+class HomeUploadProfileImageErrorState extends HomeLayoutState {
+  final error;
+
+  HomeUploadProfileImageErrorState(this.error);
+}
+
 class SearchLoadingState extends HomeLayoutState {}
 
 class SearchSuccessState extends HomeLayoutState {}

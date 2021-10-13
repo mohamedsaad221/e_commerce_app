@@ -19,7 +19,7 @@ class UserModel {
     }
 
     name = map['name'];
-    email = map['name'];
+    email = map['email'];
     uId = map['uId'];
     phone = map['phone'];
     image = map['image'];
